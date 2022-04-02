@@ -19,23 +19,27 @@ class Sqlighter:
     def inster_name(self, user_id, name):
         with self.connect:
             self.cursor.execute(
-                f'INSERT INTO `users` (`user_id`, `name`) VALUES ("{user_id}", "{name}")'
+                f'INSERT INTO `persons` (`user_id`, `name`) VALUES ("{user_id}", "{name}")'
             )
 
     def update_name(self, user_id, name):
         with self.connect:
             self.cursor.execute(
-                f'UPDATE `users` SET `name` = "{name}" WHERE `user_id` = {user_id}'
+                f'UPDATE `persons` SET `name` = "{name}" WHERE `user_id` = {user_id}'
             )
 
     def inster_currency(self, user_id, currency):
         with self.connect:
             self.cursor.execute(
-                f'INSERT INTO `users` (`user_id`, `currency`) VALUES ("{user_id}", "{currency}")'
+                f'INSERT INTO `persons` (`user_id`, `currency`) VALUES ("{user_id}", "{currency}")'
             )
 
     def update_currency(self, user_id, currency):
         with self.connect:
             self.cursor.execute(
-                f"UPDATE `users` SET `currency` = {currency} WHERE `user_id` = {user_id}"
-            )
+                f"UPDATE `persons` SET `currency` = ? WHERE `user_id` = ?",
+                (
+                    currency,
+                    user_id,
+                ),
+            ).fetchall()
